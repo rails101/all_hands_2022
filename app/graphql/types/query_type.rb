@@ -10,8 +10,16 @@ module Types
     field :users, [Types::UserType], null: false,
       description: "List all users in email order"
 
+    field :user, Types::UserType, "Find a user by ID", null: false do
+      argument :id, ID
+    end
+
     def users
       User.all.order(:email)
+    end
+
+    def user(id:)
+      User.find(id)
     end
   end
 end
