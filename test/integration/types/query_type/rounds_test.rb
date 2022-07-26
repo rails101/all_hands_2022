@@ -65,4 +65,77 @@ class Types::QueryType::RoundsTest < ActionDispatch::IntegrationTest
       @response.parsed_body
     )
   end
+
+  test "rounds without users" do
+    query = <<~GRAPHQL
+      {
+        rounds {
+          id
+          selections {
+            id
+          }
+        }
+      }
+    GRAPHQL
+
+    post graphql_path, params: { query: query }
+
+    rounds_in_id_order = {
+      rounds(:full) => [
+        selections(:full_adrian),
+        selections(:full_daniel),
+        selections(:full_chantel),
+        selections(:full_sarah),
+      ],
+      rounds(:empty) => [],
+    }
+
+    assert_equal(
+      {
+        "data" => {
+          "rounds" => rounds_in_id_order.map { |round, selections|
+            {
+              "id" => round.id.to_s,
+              "selections" => selections.map { |selection|
+                {
+                  "id" => selection.id.to_s,
+                }
+              },
+            }
+          },
+        },
+      },
+      @response.parsed_body
+    )
+  end
+
+  test "rounds without selections" do
+    query = <<~GRAPHQL
+      {
+        rounds {
+          id
+        }
+      }
+    GRAPHQL
+
+    post graphql_path, params: { query: query }
+
+    rounds_in_id_order = [
+      rounds(:full),
+      rounds(:empty),
+    ]
+
+    assert_equal(
+      {
+        "data" => {
+          "rounds" => rounds_in_id_order.map { |round|
+            {
+              "id" => round.id.to_s,
+            }
+          },
+        },
+      },
+      @response.parsed_body
+    )
+  end
 end

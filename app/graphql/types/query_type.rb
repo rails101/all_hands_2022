@@ -7,7 +7,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :rounds, [RoundType], null: false,
+    field :rounds, [RoundType], null: false, extras: [:lookahead],
       description: "List all rounds in creation order"
 
     field :users, [Types::UserType], null: false,
@@ -17,8 +17,18 @@ module Types
       argument :id, ID
     end
 
-    def rounds
-      Round.all.order(:id)
+    def rounds(lookahead:)
+      inclusions = {}
+
+      if lookahead.selects?(:selections)
+        selection_inclusions = {}
+        if lookahead.selection(:selections).selects?(:user)
+          selection_inclusions[:user] = {}
+        end
+        inclusions[:selections] = selection_inclusions
+      end
+
+      Round.all.includes(inclusions).order(:id)
     end
 
     def users
