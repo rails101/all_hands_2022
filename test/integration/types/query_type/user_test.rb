@@ -10,6 +10,7 @@ class Types::QueryType::UserTest < ActionDispatch::IntegrationTest
           email
           createdAt
           updatedAt
+          archived
         }
       }
     GRAPHQL
@@ -29,6 +30,7 @@ class Types::QueryType::UserTest < ActionDispatch::IntegrationTest
             "email" => user.email,
             "createdAt" => user.created_at.iso8601,
             "updatedAt" => user.updated_at.iso8601,
+            "archived" => user.archived,
           },
         },
       },
