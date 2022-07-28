@@ -32,7 +32,7 @@ module Types
     end
 
     def users
-      User.all.order(:email)
+      User.unarchived.order(:name).limit(100)
     end
 
     def user(id:)

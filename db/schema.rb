@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_27_154853) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_28_212208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_154853) do
     t.datetime "updated_at", null: false
     t.boolean "archived", default: false, null: false
     t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true
+    t.index ["name"], name: "index_users_on_name_where_not_archived", where: "(NOT archived)"
   end
 
   add_foreign_key "selections", "rounds"
