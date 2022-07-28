@@ -13,3 +13,23 @@ adrian:
 daniel:
   name: Daniel Bryant
   email: daniel@example.com
+
+casper:
+  name: Casper
+  email: casper@example.com
+  archived: true
+
+stretch:
+  name: Stretch
+  email: stretch@example.com
+  archived: true
+
+fatso:
+  name: Fatso
+  email: fatso@example.com
+  archived: true
+
+stinkie:
+  name: Stinkie
+  email: stinkie@example.com
+  archived: true

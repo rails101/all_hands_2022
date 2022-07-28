@@ -19,9 +19,13 @@ class Types::QueryType::UsersTest < ActionDispatch::IntegrationTest
 
     users_in_email_order = [
       users(:adrian),
+      users(:casper),
       users(:chantel),
       users(:daniel),
+      users(:fatso),
       users(:sarah),
+      users(:stinkie),
+      users(:stretch),
     ]
 
     assert_equal(

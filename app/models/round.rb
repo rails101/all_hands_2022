@@ -3,6 +3,6 @@ class Round < ApplicationRecord
   has_many :users, through: :selections
 
   def available_users
-    User.without(users)
+    User.unarchived.without(users)
   end
 end

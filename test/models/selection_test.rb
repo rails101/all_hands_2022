@@ -12,9 +12,24 @@ class SelectionTest < ActiveSupport::TestCase
 
   context "after initialize" do
     should "select a random available user" do
+      available_users = [
+        users(:sarah),
+        users(:chantel),
+        users(:adrian),
+        users(:daniel),
+      ]
+
+      unavailable_users = [
+        users(:casper),
+        users(:stretch),
+        users(:fatso),
+        users(:stinkie),
+      ]
+
       round = rounds(:empty)
       selection = Selection.new(round: round)
-      assert_includes users, selection.user
+      assert_includes available_users, selection.user
+      assert_not_includes unavailable_users, selection.user
     end
 
     should "not select a user when round is not set" do
